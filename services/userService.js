@@ -3,51 +3,51 @@ const { UserRepository } = require('../repositories/userRepository');
 class UserService {
 
     search(search) {
-        const item = UserRepository.getOne(search);
-        if(!item) {
+        const result = UserRepository.getOne(search);
+        if(!result) {
             return null;
         }
-        return item;
+        return result;
     }
 
     getCollection() {
-        const item = UserRepository.getAll();
-        if(!item) {
+        const result = UserRepository.getAll();
+        if(!result) {
             return null;
         }
-        return item;
+        return result;
     }
 
     getById(id) {
-        const item = UserRepository.getOne(user => user.id === id);
-        if(!item) {
+        const result = UserRepository.getOne(user => user.id === id);
+        if(!result) {
             return null;
         }
-        return item;
+        return result;
     }
 
     create(user) {
-        const item = UserRepository.create(user)
-        if(!item) {
+        const result = UserRepository.create(user)
+        if(!result) {
             return null;
         }
-        return item;
+        return result;
     }
 
     update(id, userToUpdate) {
-        const item = UserRepository.update(id, userToUpdate)
-        if(!item) {
+        const result = UserRepository.update(id, userToUpdate)
+        if(!result) {
             return null;
         }
-        return item;
+        return result;
     }
 
     delete(id) {
-        const item = UserRepository.delete(id)
-        if(!item) {
+        const result = UserRepository.delete(id)
+        if(!result) {
             return null;
         }
-        return item;
+        return result;
     }
 
 }
