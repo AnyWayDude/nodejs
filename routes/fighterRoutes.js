@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const FighterService = require('../services/fighterService');
 const { responseMiddleware } = require('../middlewares/response.middleware');
-const { createFighterValid, updateFighterValid } = require('../middlewares/fighter.validation.middleware');
+const { createFighterValidation, updateFighterValidation } = require('../middlewares/fighter.validation.middleware');
 
 const router = Router();
 
@@ -41,7 +41,12 @@ router.get(
 
 router.post(
     '/',
+    createFighterValidation,
     (req, res, next) => {
+        if (res.err) {
+            return next();
+        }
+        
         try {
             const data = FighterService.create(req.body);
             res.data = data;

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const UserService = require('../services/userService');
-const { createUserValid, updateUserValid } = require('../middlewares/user.validation.middleware');
+const { createUserValidation, updateUserValidation } = require('../middlewares/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
 
 const router = Router();
@@ -37,11 +37,14 @@ router.get(
 
 router.post(
     '/',
+    createUserValidation,
     (req, res, next) => {
+        if (res.err) {
+            return next();
+        }
+
         try {
-            console.log("data")
             const data = UserService.create(req.body)
-            console.log(data)
             res.data = data;
         } catch (err) {
             res.err = err;
@@ -52,7 +55,7 @@ router.post(
     responseMiddleware
 );
 
-router.patch(
+router.put(
     '/:id',
     (req, res, next) => {
         try {
