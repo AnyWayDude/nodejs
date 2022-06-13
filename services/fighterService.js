@@ -1,12 +1,19 @@
 const { FighterRepository } = require('../repositories/fighterRepository');
 
 class FighterService {
-    // TODO: Implement methods to work with fighters
+
+    search(search) {
+        const result = FighterRepository.getOne(search);
+        if(!result) {
+            return null;
+        }
+        return result;
+    }
 
     getCollection() {
         const result = FighterRepository.getAll();
         if(!result) {
-            return null;
+            return [];
         }
         return result;
     }
@@ -14,13 +21,13 @@ class FighterService {
     getById(id) {
         const result = FighterRepository.getOne(fighter => fighter.id === id);
         if(!result) {
-            return null;
+            throw Error('Fighter not found');
         }
         return result;
     }
 
     create(fighter) {
-        const result = FighterRepository.create(fighter)
+        const result = FighterRepository.create(fighter);
         if(!result) {
             return null;
         }
@@ -28,20 +35,21 @@ class FighterService {
     }
 
     update(id, fighterToUpdate) {
-        const result = FighterRepository.update(id, fighterToUpdate)
-        if(!result) {
-            return null;
-        }
+        this.getById(id)
+        const result = FighterRepository.update(id, fighterToUpdate);
+    
         return result;
     }
 
     delete(id) {
-        const result = FighterRepository.delete(id)
-        if(!result) {
-            return null;
+        this.getById(id);
+        FighterRepository.delete(id);
+        
+        return {
+            status: 'ok'
         }
-        return result;
     }
+    
 }
 
 module.exports = new FighterService();

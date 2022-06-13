@@ -13,7 +13,7 @@ class UserService {
     getCollection() {
         const result = UserRepository.getAll();
         if(!result) {
-            return null;
+            return [];
         }
         return result;
     }
@@ -21,13 +21,13 @@ class UserService {
     getById(id) {
         const result = UserRepository.getOne(user => user.id === id);
         if(!result) {
-            return null;
+           throw Error('User not found');
         }
         return result;
     }
 
     create(user) {
-        const result = UserRepository.create(user)
+        const result = UserRepository.create(user);
         if(!result) {
             return null;
         }
@@ -35,21 +35,21 @@ class UserService {
     }
 
     update(id, userToUpdate) {
-        const result = UserRepository.update(id, userToUpdate)
-        if(!result) {
-            return null;
-        }
+        this.getById(id);
+        const result = UserRepository.update(id, userToUpdate);
+
         return result;
     }
 
     delete(id) {
-        const result = UserRepository.delete(id)
-        if(!result) {
-            return null;
-        }
-        return result;
-    }
+        this.getById(id);
+        
+        UserRepository.delete(id);
 
+        return {
+            status: 'ok'
+        };
+    }
 }
 
 module.exports = new UserService();
