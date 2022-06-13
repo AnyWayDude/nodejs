@@ -1,46 +1,72 @@
 const { fighter } = require('../models/fighter');
 const { createError } = require('../helpers/createErrorHelper');
-const { creationModelValidation } = require('../helpers/modelValidationHelpers');
+const { createModelValidation } = require('../helpers/modelValidationHelpers');
 const { powerValidation, defenseValidation, healthValidation } = require('../helpers/fighterValidationHelpers');
+const FighterService = require('../services/fighterService');
 
 
 const createFighterValidation = (req, res, next) => {
-    const isValidModel = creationModelValidation(fighter, req.body);
+
+    const isValidModel = createModelValidation(fighter, req.body);
     if (!isValidModel) {
         res.status(400);
         res.err = createError('Invalid model');
         return next();
     }
 
-    const isValidPower = powerValidation(req.body.power);
-    if (!isValidPower) {
+    const error = getFighterValidationError(req.body);
+    if (error) {
         res.status(400);
-        res.err = createError('Invalid 1-99 power');
-        return next();
+        res.err = error;
     }
-
-    const isValidDefense = defenseValidation(req.body.defense);
-    if (!isValidDefense) {
-        res.status(400);
-        res.err = createError('Invalid 1-9 defense');
-        return next();
-    }
-
-    const isValidHealth = healthValidation(req.body.health);
-    if (!isValidHealth) {
-        res.status(400);
-        res.err = createError('Invalid 81-119 health');
-        return next();
-    }
-
-
 
     next();
 }
 
 const updateFighterValidation = (req, res, next) => {
-    // TODO: Implement validatior for fighter entity during update
+
+    const isValidModel = updateModelValidation(user, req.body)
+    if (!isValidModel) {
+        res.status(400);
+        res.err = createError('Invalid model');
+        return next();
+    }
+
+    const error = getFighterValidationError(req.body);
+    if (error) {
+        res.status(400);
+        res.err = error;
+    }
+
     next();
+}
+
+const getFighterValidationError = (body) => {
+    const { name, power, defense, health } = body;
+
+    const isDuplicateFighterName = FighterService.search({
+        name,
+    });
+    if (name && isDuplicateFighterName) {
+        return createError('Fighter name already exist');
+    }
+
+    const isValidPower = powerValidation(power);
+    if (power && !isValidPower) {
+        return createError('Power 1-99 invalid ');
+    }
+
+    const isValidDefense = defenseValidation(defense);
+    if (defense && !isValidDefense) {
+        return createError('Defense 1-9 invalid');
+    }
+
+    const isValidHealth = healthValidation(health);
+    if (health && !isValidHealth) {
+        return createError('Health 81-119 invalid');
+    }
+
+    return null;
 }
 
 exports.createFighterValidation = createFighterValidation;

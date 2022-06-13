@@ -3,6 +3,14 @@ const { FighterRepository } = require('../repositories/fighterRepository');
 class FighterService {
     // TODO: Implement methods to work with fighters
 
+    search(search) {
+        const result = FighterRepository.getOne(search);
+        if(!result) {
+            return null;
+        }
+        return result;
+    }
+
     getCollection() {
         const result = FighterRepository.getAll();
         if(!result) {
