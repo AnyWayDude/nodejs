@@ -57,6 +57,7 @@ router.post(
 
 router.put(
     '/:id',
+    updateUserValidation,
     (req, res, next) => {
         try {
             const data = UserService.update(req.params.id, req.body)
