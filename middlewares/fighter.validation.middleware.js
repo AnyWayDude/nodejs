@@ -10,7 +10,7 @@ const createFighterValidation = (req, res, next) => {
     const isValidModel = createModelValidation(fighter, req.body);
     if (!isValidModel) {
         res.status(400);
-        res.err = createError('Invalid model');
+        res.err = new Error('Invalid model');
         return next();
     }
 
@@ -24,11 +24,10 @@ const createFighterValidation = (req, res, next) => {
 }
 
 const updateFighterValidation = (req, res, next) => {
-
     const isValidModel = updateModelValidation(user, req.body)
     if (!isValidModel) {
         res.status(400);
-        res.err = createError('Invalid model');
+        res.err = new Error('Invalid model');
         return next();
     }
 
@@ -48,22 +47,22 @@ const getFighterValidationError = (body) => {
         name,
     });
     if (name && isDuplicateFighterName) {
-        return createError('Fighter name already exist');
+        return new Error('Fighter name already exist');
     }
 
     const isValidPower = powerValidation(power);
     if (power && !isValidPower) {
-        return createError('Power 1-99 invalid ');
+        return new Error('Power 1-99 invalid ');
     }
 
     const isValidDefense = defenseValidation(defense);
     if (defense && !isValidDefense) {
-        return createError('Defense 1-9 invalid');
+        return new Error('Defense 1-9 invalid');
     }
 
     const isValidHealth = healthValidation(health);
     if (health && !isValidHealth) {
-        return createError('Health 81-119 invalid');
+        return new Error('Health 81-119 invalid');
     }
 
     return null;

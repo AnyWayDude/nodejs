@@ -9,9 +9,7 @@ router.get(
     '/',
     (req, res, next) => {
         try {
-            console.log('asdasds')
             const data = FighterService.getCollection();
-            console.log(data)
             res.data = data;
         } catch (err) {
             res.err = err;
@@ -59,6 +57,7 @@ router.post(
 
 router.put(
     '/:id',
+    updateFighterValidation,
     (req, res, next) => {
         try {
             const data = FighterService.update(req.params.id, req.body);
