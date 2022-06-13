@@ -3,7 +3,7 @@ function createModelValidation(model, body) {
 
     const isValidModelLength = Object.keys(restModel).length === Object.keys(body).length;
     const isValidModelKeys = Object.keys(body).every(key => Object.keys(restModel).includes(key));
-    const invalidModelValuesCount = Object.values(body).filter(values => !Boolean(values)).length
+    const invalidModelValuesCount = Object.values(body).filter(values => !Boolean(values)).length;
 
     return isValidModelKeys && isValidModelLength && !invalidModelValuesCount
 }

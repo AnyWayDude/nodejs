@@ -9,7 +9,7 @@ router.get(
     '/',
     (req, res, next) => {
         try {
-            const data = UserService.getCollection()
+            const data = UserService.getCollection();
             res.data = data;
         } catch (err) {
             res.err = err;
@@ -24,7 +24,7 @@ router.get(
     '/:id',
     (req, res, next) => {
         try {
-            const data = UserService.getById(req.params.id)
+            const data = UserService.getById(req.params.id);
             res.data = data;
         } catch (err) {
             res.err = err;
@@ -44,7 +44,7 @@ router.post(
         }
 
         try {
-            const data = UserService.create(req.body)
+            const data = UserService.create(req.body);
             res.data = data;
         } catch (err) {
             res.err = err;
@@ -60,7 +60,7 @@ router.put(
     updateUserValidation,
     (req, res, next) => {
         try {
-            const data = UserService.update(req.params.id, req.body)
+            const data = UserService.update(req.params.id, req.body);
             res.data = data;
         } catch (err) {
             res.err = err;
@@ -75,7 +75,7 @@ router.delete(
     '/:id',
     (req, res, next) => {
         try {
-            const data = UserService.delete(req.params.id)
+            const data = UserService.delete(req.params.id);
             res.data = data;
         } catch (err) {
             res.err = err;

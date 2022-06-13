@@ -21,13 +21,13 @@ class UserService {
     getById(id) {
         const result = UserRepository.getOne(user => user.id === id);
         if(!result) {
-           throw Error('User not found')
+           throw Error('User not found');
         }
         return result;
     }
 
     create(user) {
-        const result = UserRepository.create(user)
+        const result = UserRepository.create(user);
         if(!result) {
             return null;
         }
@@ -36,7 +36,7 @@ class UserService {
 
     update(id, userToUpdate) {
         this.getById(id);
-        const result = UserRepository.update(id, userToUpdate)
+        const result = UserRepository.update(id, userToUpdate);
 
         return result;
     }
@@ -44,13 +44,12 @@ class UserService {
     delete(id) {
         this.getById(id);
         
-        UserRepository.delete(id)
+        UserRepository.delete(id);
 
         return {
             status: 'ok'
         };
     }
-
 }
 
 module.exports = new UserService();

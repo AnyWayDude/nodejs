@@ -23,7 +23,7 @@ const createUserValidation = (req, res, next) => {
 }
 
 const updateUserValidation = (req, res, next) => {
-    const isValidModel = updateModelValidation(user, req.body)
+    const isValidModel = updateModelValidation(user, req.body);
     if (!isValidModel) {
         res.status(400);
         res.err = new Error('Invalid model');
@@ -54,7 +54,7 @@ const getUserValidationError = (body) => {
         return new Error('Email already exist');
     }
 
-    const isValidPhoneNumber = phoneNumberValidation(phoneNumber)
+    const isValidPhoneNumber = phoneNumberValidation(phoneNumber);
     if (phoneNumber && !isValidPhoneNumber) {
         return new Error('Invalid phone number');
     }
@@ -66,7 +66,7 @@ const getUserValidationError = (body) => {
         return new Error('Mobile phone already exist');
     }
 
-    const isValidPassword = passwordValidation(password)
+    const isValidPassword = passwordValidation(password);
     if (password && !isValidPassword) {
         return new Error('Invalid password');
     }
